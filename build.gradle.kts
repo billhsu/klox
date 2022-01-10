@@ -5,7 +5,7 @@ plugins {
     application
 }
 
-group = "studio.shipeng"
+group = "billhsu"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -25,5 +25,18 @@ tasks.withType<KotlinCompile>() {
 }
 
 application {
-    mainClass.set("LoxKt")
+    mainClass.set("billhsu.lox.Lox")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "billhsu.lox.Lox"
+    }
+    // To add all of the dependencies
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
 }

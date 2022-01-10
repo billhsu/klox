@@ -1,3 +1,5 @@
+package billhsu.lox
+
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -10,6 +12,18 @@ class Lox {
     companion object {
         private var hadError = false
         private var hadRuntimeError = false
+
+        @JvmStatic
+        fun main(args: Array<String>) {
+            when (args.size) {
+                1 -> Lox.runFile(args[0])
+                0 -> Lox.runPrompt()
+                else -> {
+                    println("Usage: klox [script]")
+                    exitProcess(64)
+                }
+            }
+        }
 
         internal fun error(line: Int, message: String) {
             report(line, "", message)
@@ -66,17 +80,6 @@ class Lox {
             if (hadError) {
                 return
             }
-        }
-    }
-}
-
-fun main(args: Array<String>) {
-    when (args.size) {
-        1 -> Lox.runFile(args[0])
-        0 -> Lox.runPrompt()
-        else -> {
-            println("Usage: klox [script]")
-            exitProcess(64)
         }
     }
 }
