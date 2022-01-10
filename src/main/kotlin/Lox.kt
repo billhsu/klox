@@ -63,7 +63,6 @@ class Lox {
             hadRuntimeError = false
             val scanner = Scanner(source)
             val tokens: List<Token> = scanner.scanTokens()
-            print(tokens)
             if (hadError) {
                 return
             }

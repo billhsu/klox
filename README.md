@@ -1,2 +1,2 @@
 # klox
-A Kotlin implementation of [the Lox language](https://github.com/munificent/craftinginterpreters/).
+Yet another Kotlin implementation of [the Lox language](https://github.com/munificent/craftinginterpreters/).

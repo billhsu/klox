@@ -30,7 +30,7 @@ class Scanner(private val source: String) {
             start = current
             scanToken()
         }
-        addToken(TokenType.EOF)
+        tokens.add(Token(TokenType.EOF, "", null, line))
         return tokens
     }
 
