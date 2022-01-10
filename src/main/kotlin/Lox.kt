@@ -70,7 +70,6 @@ class Lox {
     }
 }
 
-
 fun main(args: Array<String>) {
     when (args.size) {
         1 -> Lox.runFile(args[0])
