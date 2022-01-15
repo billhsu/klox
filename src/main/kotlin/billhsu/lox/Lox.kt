@@ -16,8 +16,8 @@ class Lox {
         @JvmStatic
         fun main(args: Array<String>) {
             when (args.size) {
-                1 -> Lox.runFile(args[0])
-                0 -> Lox.runPrompt()
+                1 -> runFile(args[0])
+                0 -> runPrompt()
                 else -> {
                     println("Usage: klox [script]")
                     exitProcess(64)
