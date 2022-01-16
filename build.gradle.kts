@@ -5,7 +5,7 @@ plugins {
     application
 }
 
-group = "billhsu"
+group = "studio.shipeng"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -25,12 +25,12 @@ tasks.withType<KotlinCompile>() {
 }
 
 application {
-    mainClass.set("billhsu.lox.Lox")
+    mainClass.set("studio.shipeng.lox.Lox")
 }
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "billhsu.lox.Lox"
+        attributes["Main-Class"] = "studio.shipeng.lox.Lox"
     }
     // To add all of the dependencies
     from(sourceSets.main.get().output)
