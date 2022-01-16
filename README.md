@@ -3,6 +3,8 @@ Yet another Kotlin implementation of [the Lox language](https://github.com/munif
 1. Lox language parser, interpreter, and bytecode compiler
 2. A virtual machine 
 
+We will try to stay as close as the original implementation from the book as possible.
+
 ## Instructions
 To compile
 > ./gradlew clean build
