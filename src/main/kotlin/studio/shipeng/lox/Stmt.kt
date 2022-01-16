@@ -22,7 +22,7 @@ sealed class Stmt {
 
     internal class Class(
         val name: Token,
-        val superclass: Expr.Variable,
+        val superclass: Expr.Variable?,
         val methods: List<Function>
     ) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitClassStmt(this)
@@ -37,7 +37,7 @@ sealed class Stmt {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitFunctionStmt(this)
     }
 
-    internal class If(val condition: Expr, val thenBranch: Stmt, val elseBranch: Stmt) : Stmt() {
+    internal class If(val condition: Expr, val thenBranch: Stmt, val elseBranch: Stmt?) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitIfStmt(this)
     }
 
@@ -45,11 +45,11 @@ sealed class Stmt {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitPrintStmt(this)
     }
 
-    internal class Return(val keyword: Token, val value: Expr) : Stmt() {
+    internal class Return(val keyword: Token, val value: Expr?) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitReturnStmt(this)
     }
 
-    internal class Var(val name: Token, val initializer: Expr) : Stmt() {
+    internal class Var(val name: Token, val initializer: Expr?) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitVarStmt(this)
     }
 
