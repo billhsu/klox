@@ -78,7 +78,7 @@ class Lox {
             val scanner = Scanner(source)
             val tokens: List<Token> = scanner.scanTokens()
             val parser = Parser(tokens)
-            val stmts = parser.parse()
+            val statements = parser.parse()
             if (hadError) {
                 return
             }

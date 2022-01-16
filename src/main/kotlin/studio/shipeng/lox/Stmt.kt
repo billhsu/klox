@@ -16,7 +16,7 @@ sealed class Stmt {
 
     internal abstract fun <R> accept(visitor: Visitor<R>): R
 
-    internal class Block(val statements: List<Stmt>) : Stmt() {
+    internal class Block(val statements: List<Stmt?>) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitBlockStmt(this)
     }
 
@@ -32,7 +32,7 @@ sealed class Stmt {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitExpressionStmt(this)
     }
 
-    internal class Function(val name: Token, val params: List<Token>, val body: List<Stmt>) :
+    internal class Function(val name: Token, val params: List<Token>, val body: List<Stmt?>) :
         Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitFunctionStmt(this)
     }

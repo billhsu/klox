@@ -7,19 +7,26 @@ class Parser(private val tokens: List<Token>) {
     private class ParseError : RuntimeException()
 
     fun parse(): List<Stmt> {
-        val statements: MutableList<Stmt> = java.util.ArrayList()
+        val statements: MutableList<Stmt> = mutableListOf()
         while (!isAtEnd()) {
-            statements.add(declaration())
+            val stmt = declaration()
+            if (stmt != null) {
+                statements.add(stmt)
+            }
         }
         return statements
     }
 
-    private fun declaration(): Stmt {
-        if (match(TokenType.CLASS)) return classDeclaration()
-        if (match(TokenType.FUN)) return function("function")
-        if (match(TokenType.VAR)) return varDeclaration()
-
-        return statement()
+    private fun declaration(): Stmt? {
+        return try {
+            if (match(TokenType.CLASS)) return classDeclaration()
+            if (match(TokenType.FUN)) return function("function")
+            if (match(TokenType.VAR)) return varDeclaration()
+            return statement()
+        } catch (error: ParseError) {
+            synchronize()
+            null
+        }
     }
 
     private fun classDeclaration(): Stmt {
@@ -159,8 +166,8 @@ class Parser(private val tokens: List<Token>) {
         return Stmt.Function(name, parameters, body)
     }
 
-    private fun block(): List<Stmt> {
-        val statements: MutableList<Stmt> = ArrayList()
+    private fun block(): List<Stmt?> {
+        val statements: MutableList<Stmt?> = ArrayList()
         while (!check(TokenType.RIGHT_BRACE) && !isAtEnd()) {
             statements.add(declaration())
         }
@@ -361,5 +368,17 @@ class Parser(private val tokens: List<Token>) {
     private fun error(token: Token, message: String): ParseError {
         Lox.error(token, message)
         return ParseError()
+    }
+
+    private fun synchronize() {
+        advance()
+        while (!isAtEnd()) {
+            if (previous().type === TokenType.SEMICOLON) return
+            when (peek().type) {
+                TokenType.CLASS, TokenType.FUN, TokenType.VAR, TokenType.FOR, TokenType.IF, TokenType.WHILE, TokenType.PRINT, TokenType.RETURN -> return
+                else -> {}
+            }
+            advance()
+        }
     }
 }
