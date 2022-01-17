@@ -79,6 +79,10 @@ class Lox {
             val tokens: List<Token> = scanner.scanTokens()
             val parser = Parser(tokens)
             val statements = parser.parse()
+            val astPrinter = AstPrinter()
+            for (statement in statements) {
+                println(astPrinter.print(statement))
+            }
             if (hadError) {
                 return
             }
