@@ -129,7 +129,7 @@ internal class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Void?> {
     override fun visitReturnStmt(stmt: Stmt.Return): Void? {
         var value: Any? = null
         if (stmt.value != null) value = evaluate(stmt.value)
-        throw Return(value!!)
+        throw Return(value)
     }
 
     override fun visitVarStmt(stmt: Stmt.Var): Void? {
