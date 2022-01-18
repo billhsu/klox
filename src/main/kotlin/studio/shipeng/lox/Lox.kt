@@ -12,6 +12,7 @@ class Lox {
     companion object {
         private var hadError = false
         private var hadRuntimeError = false
+        private val interpreter = Interpreter()
 
         @JvmStatic
         fun main(args: Array<String>) {
@@ -79,13 +80,15 @@ class Lox {
             val tokens: List<Token> = scanner.scanTokens()
             val parser = Parser(tokens)
             val statements = parser.parse()
-            val astPrinter = AstPrinter()
-            for (statement in statements) {
-                println(astPrinter.print(statement))
-            }
             if (hadError) {
                 return
             }
+            val resolver = Resolver(interpreter)
+            resolver.resolve(statements)
+            if (hadError) {
+                return
+            }
+            interpreter.interpret(statements);
         }
     }
 }

@@ -1,7 +1,7 @@
 package studio.shipeng.lox
 
 
-class Environment(private val enclosing: Environment?) {
+class Environment(val enclosing: Environment?) {
     private val values = hashMapOf<String, Any?>()
     constructor() : this(null)  {}
 

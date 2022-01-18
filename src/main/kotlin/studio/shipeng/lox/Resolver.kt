@@ -3,8 +3,7 @@ package studio.shipeng.lox
 import java.util.Stack
 import kotlin.collections.HashMap
 
-
-class Resolver(private val interpreter: Interpreter) : Expr.Visitor<Void?>, Stmt.Visitor<Void?> {
+internal class Resolver(private val interpreter: Interpreter) : Expr.Visitor<Void?>, Stmt.Visitor<Void?> {
     private val scopes = Stack<MutableMap<String, Boolean>>()
     private var currentFunction = FunctionType.NONE
 
