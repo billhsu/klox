@@ -264,7 +264,6 @@ class Resolver(private val interpreter: Interpreter) : Expr.Visitor<Void?>, Stmt
     private fun declare(name: Token) {
         if (scopes.isEmpty()) return
         val scope = scopes.peek()
-        //> duplicate-variable
         if (scope.containsKey(name.lexeme)) {
             Lox.error(
                 name,
