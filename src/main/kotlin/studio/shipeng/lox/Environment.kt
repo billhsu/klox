@@ -3,6 +3,7 @@ package studio.shipeng.lox
 
 class Environment(private val enclosing: Environment?) {
     private val values = hashMapOf<String, Any?>()
+    constructor() : this(null)  {}
 
     fun get(name: Token): Any? {
         if (values.containsKey(name.lexeme)) {

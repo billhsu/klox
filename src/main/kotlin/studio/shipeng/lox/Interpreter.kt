@@ -1,6 +1,14 @@
 package studio.shipeng.lox
 
-internal class Interpreter: Expr.Visitor<Any>, Stmt.Visitor<Void> {
+
+class Interpreter : Expr.Visitor<Any>, Stmt.Visitor<Void> {
+    private val globals = Environment()
+    private val environment = globals
+    private val locals = mutableMapOf<Expr, Int>()
+    fun resolve(expr: Expr, depth: Int) {
+        locals[expr] = depth
+    }
+
     override fun visitAssignExpr(expr: Expr.Assign): Any {
         TODO("Not yet implemented")
     }

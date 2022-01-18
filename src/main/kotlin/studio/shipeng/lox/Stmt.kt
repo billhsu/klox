@@ -16,11 +16,11 @@ sealed class Stmt {
 
     internal abstract fun <R> accept(visitor: Visitor<R>): R
 
-    internal class Block(val statements: List<Stmt?>) : Stmt() {
+    class Block(val statements: List<Stmt?>) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitBlockStmt(this)
     }
 
-    internal class Class(
+    class Class(
         val name: Token,
         val superclass: Expr.Variable?,
         val methods: List<Function>
@@ -28,32 +28,32 @@ sealed class Stmt {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitClassStmt(this)
     }
 
-    internal class Expression(val expression: Expr) : Stmt() {
+    class Expression(val expression: Expr) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitExpressionStmt(this)
     }
 
-    internal class Function(val name: Token, val params: List<Token>, val body: List<Stmt?>) :
+    class Function(val name: Token, val params: List<Token>, val body: List<Stmt?>) :
         Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitFunctionStmt(this)
     }
 
-    internal class If(val condition: Expr, val thenBranch: Stmt, val elseBranch: Stmt?) : Stmt() {
+    class If(val condition: Expr, val thenBranch: Stmt, val elseBranch: Stmt?) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitIfStmt(this)
     }
 
-    internal class Print(val expression: Expr) : Stmt() {
+    class Print(val expression: Expr) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitPrintStmt(this)
     }
 
-    internal class Return(val keyword: Token, val value: Expr?) : Stmt() {
+    class Return(val keyword: Token, val value: Expr?) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitReturnStmt(this)
     }
 
-    internal class Var(val name: Token, val initializer: Expr?) : Stmt() {
+    class Var(val name: Token, val initializer: Expr?) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitVarStmt(this)
     }
 
-    internal class While(val condition: Expr, val body: Stmt) : Stmt() {
+    class While(val condition: Expr, val body: Stmt) : Stmt() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitWhileStmt(this)
     }
 
