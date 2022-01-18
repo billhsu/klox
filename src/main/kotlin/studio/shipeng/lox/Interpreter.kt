@@ -3,11 +3,33 @@ package studio.shipeng.lox
 
 class Interpreter : Expr.Visitor<Any>, Stmt.Visitor<Void> {
     private val globals = Environment()
-    private val environment = globals
+    private var environment = globals
     private val locals = mutableMapOf<Expr, Int>()
     fun resolve(expr: Expr, depth: Int) {
         locals[expr] = depth
     }
+
+    fun executeBlock(
+        statements: List<Stmt?>,
+        environment: Environment
+    ) {
+        val previous = this.environment
+        try {
+            this.environment = environment
+            for (statement in statements) {
+                if (statement != null) {
+                    execute(statement)
+                }
+            }
+        } finally {
+            this.environment = previous
+        }
+    }
+
+    private fun execute(stmt: Stmt) {
+        stmt.accept(this)
+    }
+
 
     override fun visitAssignExpr(expr: Expr.Assign): Any {
         TODO("Not yet implemented")
