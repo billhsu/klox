@@ -1,7 +1,10 @@
 # klox
-Yet another Kotlin implementation of [the Lox language](https://github.com/munificent/craftinginterpreters/). My goal of this project is to implement below in Kotlin: 
-1. Lox language parser, interpreter, and bytecode compiler
-2. A virtual machine 
+Yet another Kotlin implementation of [the Lox language](https://github.com/munificent/craftinginterpreters/). My goal of this project is to implement below in Kotlin:
+
+- [x] Lox parser
+- [x] Lox interpreter
+- [ ] Lox bytecode compiler
+- [ ] A virtual machine
 
 We will try to stay as close as the original implementation from the book as possible.
 
