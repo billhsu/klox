@@ -1,14 +1,15 @@
 # klox
-Yet another Kotlin implementation of [the Lox language](https://github.com/munificent/craftinginterpreters/). My goal of this project is to implement below in Kotlin:
+A Kotlin implementation of [the Lox language](https://github.com/munificent/craftinginterpreters/) with grammar extensions to support arrays and static typing. 
 
+Goals:
 - [x] Lox parser
 - [x] Lox interpreter
-- [ ] LLVM IR compiler
-- [ ] clang machine code generation
 - [ ] Add support for arrays
 - [ ] Add support for static typing
+- [ ] Implement a Virtual Machine
+- [ ] Implement byte code generation
 
-We will try to stay as close as the original implementation from the book as possible.
+(We will try to stay as close as the original implementation from the book as possible.)
 
 ## Instructions
 To compile

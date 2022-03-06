@@ -79,7 +79,14 @@ arguments      → expression ( "," expression )* ;
 ## Extensions to the Lox Grammar
 Below grammars do not exist in the original Lox implementation.
 ### Arrays
-// TODO
+```
+assignment     → ( call "." )? IDENTIFIER ( "[" logic_or "]" )* "=" assignment
+               | logic_or ;
+call           → primary ( "[" logic_or "]" )* ( "(" arguments? ")" | "." IDENTIFIER )* ;
+primary        → "true" | "false" | "nil" | "this"
+               | NUMBER | STRING | IDENTIFIER | "(" expression ")" | "[" arguments? "]"
+               | "super" "." IDENTIFIER ;
+```
 
 ### Static Typing
 // TODO
