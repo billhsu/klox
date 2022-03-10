@@ -228,6 +228,10 @@ internal class Resolver(private val interpreter: Interpreter) : Expr.Visitor<Voi
         return null
     }
 
+    override fun visitArrayExpr(expr: Expr.Array): Void? {
+        return null
+    }
+
     private fun resolve(stmt: Stmt) {
         stmt.accept(this)
     }

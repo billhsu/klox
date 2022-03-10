@@ -139,6 +139,10 @@ internal class AstPrinter : Visitor<String>, Stmt.Visitor<String> {
         return expr.name.lexeme
     }
 
+    override fun visitArrayExpr(expr: Expr.Array): String {
+        return parenthesize2("array", expr.elements)
+    }
+
     private fun parenthesize(name: String, vararg exprs: Expr): String {
         val builder = StringBuilder()
         builder.append("(").append(name)

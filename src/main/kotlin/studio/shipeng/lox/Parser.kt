@@ -326,6 +326,16 @@ class Parser(private val tokens: List<Token>) {
             consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.")
             return Expr.Grouping(expr)
         }
+        if (match(TokenType.LEFT_BRACE)) {
+            val elements: MutableList<Expr> = ArrayList()
+            if (!check(TokenType.RIGHT_BRACE)) {
+                do {
+                    elements.add(expression())
+                } while (match(TokenType.COMMA))
+            }
+            consume(TokenType.RIGHT_BRACE, "Expect ']' after elements.")
+            return Expr.Array(elements)
+        }
         throw error(peek(), "Expect expression.")
     }
 

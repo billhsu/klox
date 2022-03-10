@@ -318,6 +318,10 @@ internal class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Void?> {
         return lookUpVariable(expr.name, expr)
     }
 
+    override fun visitArrayExpr(expr: Expr.Array): Any {
+        return expr.elements
+    }
+
     private fun lookUpVariable(name: Token, expr: Expr): Any? {
         val distance = locals[expr]
         return if (distance != null) {
@@ -358,6 +362,10 @@ internal class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Void?> {
                 text = text.substring(0, text.length - 2)
             }
             return text
+        } else if (instance is List<*>) {
+            return instance.filterIsInstance<Expr>().joinToString(", ", "{", "}", 1000, "...") {
+                stringify(evaluate(it))
+            }
         }
         return instance.toString()
     }
