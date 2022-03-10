@@ -13,6 +13,8 @@ class Lox {
         private var hadError = false
         private var hadRuntimeError = false
         private val interpreter = Interpreter()
+        private val astPrinter = AstPrinter()
+        private var promptMode = false
 
         @JvmStatic
         fun main(args: Array<String>) {
@@ -64,6 +66,7 @@ class Lox {
 
         @Throws(IOException::class)
         internal fun runPrompt() {
+            promptMode = true
             val input = InputStreamReader(System.`in`)
             val reader = BufferedReader(input)
 
@@ -80,6 +83,9 @@ class Lox {
             val tokens: List<Token> = scanner.scanTokens()
             val parser = Parser(tokens)
             val statements = parser.parse()
+            if (promptMode) {
+                statements.forEach { println(astPrinter.print(it)) }
+            }
             if (hadError) {
                 return
             }
