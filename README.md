@@ -21,3 +21,6 @@ To run klox in interactive prompt mode
 To run a klox file
 > ./klox filename
 
+## Grammar
+Please refer to [grammar.md](grammar.md).
+
