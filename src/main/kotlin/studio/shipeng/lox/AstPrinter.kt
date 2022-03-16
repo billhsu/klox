@@ -143,6 +143,10 @@ internal class AstPrinter : Visitor<String>, Stmt.Visitor<String> {
         return parenthesize2("array", expr.elements)
     }
 
+    override fun visitGetSubscriptExpr(expr: GetSubscript): String {
+        return parenthesize2("subscript", expr.instance, expr.index)
+    }
+
     private fun parenthesize(name: String, vararg exprs: Expr): String {
         val builder = StringBuilder()
         builder.append("(").append(name)

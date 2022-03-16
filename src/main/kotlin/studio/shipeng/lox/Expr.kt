@@ -16,6 +16,7 @@ sealed class Expr {
         fun visitUnaryExpr(expr: Unary): R
         fun visitVariableExpr(expr: Variable): R
         fun visitArrayExpr(expr: Array): R
+        fun visitGetSubscriptExpr(expr: GetSubscript): R
     }
 
     internal abstract fun <R> accept(visitor: Visitor<R>): R
@@ -72,6 +73,10 @@ sealed class Expr {
     class Array(val elements: List<Expr>) :
         Expr() {
         override fun <R> accept(visitor: Visitor<R>): R = visitor.visitArrayExpr(this)
+    }
+
+    class GetSubscript(val instance: Expr, val bracket: Token, val index: Expr) : Expr() {
+        override fun <R> accept(visitor: Visitor<R>): R = visitor.visitGetSubscriptExpr(this)
     }
 
 }

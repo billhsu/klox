@@ -229,6 +229,15 @@ internal class Resolver(private val interpreter: Interpreter) : Expr.Visitor<Voi
     }
 
     override fun visitArrayExpr(expr: Expr.Array): Void? {
+        for (element in expr.elements) {
+            resolve(element)
+        }
+        return null
+    }
+
+    override fun visitGetSubscriptExpr(expr: Expr.GetSubscript): Void? {
+        resolve(expr.instance)
+        resolve(expr.index)
         return null
     }
 

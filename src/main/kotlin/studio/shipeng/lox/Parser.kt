@@ -270,6 +270,12 @@ class Parser(private val tokens: List<Token>) {
         while (true) {
             expr = if (match(TokenType.LEFT_PAREN)) {
                 finishCall(expr)
+            } else if (match(TokenType.LEFT_BRACKET)) {
+                val newExpr = Expr.GetSubscript(expr, peek(), expression())
+                consume(
+                    TokenType.RIGHT_BRACKET, "Expect ']'."
+                )
+                newExpr
             } else if (match(TokenType.DOT)) {
                 val name = consume(
                     TokenType.IDENTIFIER, "Expect property name after '.'."
@@ -333,7 +339,7 @@ class Parser(private val tokens: List<Token>) {
                     elements.add(expression())
                 } while (match(TokenType.COMMA))
             }
-            consume(TokenType.RIGHT_BRACE, "Expect ']' after elements.")
+            consume(TokenType.RIGHT_BRACE, "Expect '}' after elements.")
             return Expr.Array(elements)
         }
         throw error(peek(), "Expect expression.")

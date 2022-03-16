@@ -40,6 +40,8 @@ class Scanner(private val source: String) {
             ')' -> addToken(TokenType.RIGHT_PAREN)
             '{' -> addToken(TokenType.LEFT_BRACE)
             '}' -> addToken(TokenType.RIGHT_BRACE)
+            '[' -> addToken(TokenType.LEFT_BRACKET)
+            ']' -> addToken(TokenType.RIGHT_BRACKET)
             ',' -> addToken(TokenType.COMMA)
             '.' -> addToken(TokenType.DOT)
             '-' -> addToken(TokenType.MINUS)

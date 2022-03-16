@@ -322,6 +322,20 @@ internal class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Void?> {
         return expr.elements
     }
 
+    override fun visitGetSubscriptExpr(expr: Expr.GetSubscript): Any? {
+        val instance = evaluate(expr.instance) as? MutableList<*>
+            ?: throw RuntimeError(
+                expr.bracket,
+                "Only arrays have subscripts."
+            )
+        val index = evaluate(expr.index) as? Double
+            ?: throw RuntimeError(
+                expr.bracket,
+                "Index value needs to be an integer."
+            )
+        return evaluate(instance[index.toInt()] as Expr)
+    }
+
     private fun lookUpVariable(name: Token, expr: Expr): Any? {
         val distance = locals[expr]
         return if (distance != null) {
