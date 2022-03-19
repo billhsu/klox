@@ -10,6 +10,16 @@ import kotlin.system.exitProcess
 
 class Lox {
     companion object {
+        val ANSI_RESET = "\u001B[0m"
+        val ANSI_BLACK = "\u001B[30m"
+        val ANSI_RED = "\u001B[31m"
+        val ANSI_GREEN = "\u001B[32m"
+        val ANSI_YELLOW = "\u001B[33m"
+        val ANSI_BLUE = "\u001B[34m"
+        val ANSI_PURPLE = "\u001B[35m"
+        val ANSI_CYAN = "\u001B[36m"
+        val ANSI_WHITE = "\u001B[37m"
+
         private var hadError = false
         private var hadRuntimeError = false
         private val interpreter = Interpreter()
@@ -48,9 +58,11 @@ class Lox {
         }
 
         internal fun runtimeError(error: RuntimeError) {
+            print(ANSI_RED)
             System.err.println(
                 error.message + "\n[line " + error.token.line + "]"
             )
+            print(ANSI_RESET)
             hadRuntimeError = true
         }
 
@@ -69,9 +81,10 @@ class Lox {
             promptMode = true
             val input = InputStreamReader(System.`in`)
             val reader = BufferedReader(input)
+            System.setErr(System.out)
 
             while (true) {
-                print("> ")
+                print("$ANSI_YELLOW>$ANSI_RESET ")
                 run(reader.readLine())
             }
         }
@@ -84,8 +97,11 @@ class Lox {
             val parser = Parser(tokens)
             val statements = parser.parse()
             if (promptMode) {
-                print("[AST]: ")
-                statements.forEach { println(astPrinter.print(it)) }
+                if (statements.isNotEmpty()) {
+                    print("$ANSI_BLUE[AST]: ")
+                    statements.forEach { println(astPrinter.print(it)) }
+                    print(ANSI_RESET)
+                }
             }
             if (hadError) {
                 return
