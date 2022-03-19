@@ -319,21 +319,50 @@ internal class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Void?> {
     }
 
     override fun visitArrayExpr(expr: Expr.Array): Any {
-        return expr.elements
+        return expr.elements.map { evaluate(it) }
     }
 
     override fun visitGetSubscriptExpr(expr: Expr.GetSubscript): Any? {
-        val instance = evaluate(expr.instance) as? MutableList<*>
+        val array = evaluate(expr.array) as? MutableList<*>
             ?: throw RuntimeError(
                 expr.bracket,
                 "Only arrays have subscripts."
             )
-        val index = evaluate(expr.index) as? Double
+        val subscript = (evaluate(expr.subscript) as? Double)?.toInt()
             ?: throw RuntimeError(
                 expr.bracket,
                 "Index value needs to be an integer."
             )
-        return evaluate(instance[index.toInt()] as Expr)
+        if (subscript >= array.size) {
+            throw RuntimeError(
+                expr.bracket,
+                "Index $subscript out of bounds for length ${array.size}"
+            )
+        }
+        return array[subscript]
+    }
+
+    override fun visitSetSubscriptExpr(expr: Expr.SetSubscript): Any? {
+        @Suppress("UNCHECKED_CAST")
+        val array = evaluate(expr.array) as? MutableList<Any?>
+            ?: throw RuntimeError(
+                expr.bracket,
+                "Only arrays have subscripts."
+            )
+        val subscript = (evaluate(expr.subscript) as? Double)?.toInt()
+            ?: throw RuntimeError(
+                expr.bracket,
+                "Index value needs to be an integer."
+            )
+        if (subscript >= array.size) {
+            throw RuntimeError(
+                expr.bracket,
+                "Index $subscript out of bounds for length ${array.size}"
+            )
+        }
+        val value = evaluate(expr.value)
+        array[subscript] = value
+        return null
     }
 
     private fun lookUpVariable(name: Token, expr: Expr): Any? {
@@ -377,8 +406,8 @@ internal class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Void?> {
             }
             return text
         } else if (instance is List<*>) {
-            return instance.filterIsInstance<Expr>().joinToString(", ", "{", "}", 1000, "...") {
-                stringify(evaluate(it))
+            return instance.joinToString(", ", "{", "}", 1000, "...") {
+                stringify(it)
             }
         }
         return instance.toString()
