@@ -144,7 +144,13 @@ internal class AstPrinter : Visitor<String>, Stmt.Visitor<String> {
     }
 
     override fun visitGetSubscriptExpr(expr: GetSubscript): String {
-        return parenthesize2("subscript", expr.instance, expr.index)
+        return parenthesize2("get_subscript", expr.array, expr.subscript)
+    }
+
+    override fun visitSetSubscriptExpr(expr: SetSubscript): String {
+        return parenthesize2(
+            "set_subscript", expr.array, expr.subscript, expr.value
+        )
     }
 
     private fun parenthesize(name: String, vararg exprs: Expr): String {

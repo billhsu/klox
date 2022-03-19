@@ -185,13 +185,19 @@ class Parser(private val tokens: List<Token>) {
         if (match(TokenType.EQUAL)) {
             val equals = previous()
             val value = assignment()
-            if (expr is Expr.Variable) {
-                val name = expr.name
-                return Expr.Assign(name, value)
-            } else if (expr is Expr.Get) {
-                return Expr.Set(expr.instance, expr.name, value)
+            when (expr) {
+                is Expr.Variable -> {
+                    val name = expr.name
+                    return Expr.Assign(name, value)
+                }
+                is Expr.Get -> {
+                    return Expr.Set(expr.instance, expr.name, value)
+                }
+                is Expr.GetSubscript -> {
+                    return Expr.SetSubscript(expr.array, expr.bracket, expr.subscript, value)
+                }
+                else -> error(equals, "Invalid assignment target.")
             }
-            error(equals, "Invalid assignment target.")
         }
         return expr
     }
