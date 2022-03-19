@@ -84,6 +84,7 @@ class Lox {
             val parser = Parser(tokens)
             val statements = parser.parse()
             if (promptMode) {
+                print("[AST]: ")
                 statements.forEach { println(astPrinter.print(it)) }
             }
             if (hadError) {
