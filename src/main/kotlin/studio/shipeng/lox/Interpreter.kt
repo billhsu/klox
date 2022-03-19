@@ -15,6 +15,18 @@ internal class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Void?> {
                 return System.currentTimeMillis().toDouble() / 1000.0
             }
         })
+        globals.define("IntArray", object : LoxCallable {
+            override fun arity(): Int {
+                return 1
+            }
+
+            override fun call(interpreter: Interpreter, arguments: List<Any?>): Any {
+                val capacity = (arguments[0] as? Double)?.toInt() ?: 0
+                val result = ArrayList<Any>(capacity)
+                result.addAll(Array(capacity){0})
+                return result
+            }
+        })
     }
 
     fun interpret(statements: List<Stmt?>) {
