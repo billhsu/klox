@@ -38,9 +38,15 @@ class Lox {
         }
 
         internal fun report(line: Int, where: String, message: String) {
+            if (promptMode) {
+                print(ANSI_RED)
+            }
             System.err.println(
                 "[line $line] Error$where: $message"
             )
+            if (promptMode) {
+                print(ANSI_RESET)
+            }
             hadError = true
         }
 
@@ -53,11 +59,15 @@ class Lox {
         }
 
         internal fun runtimeError(error: RuntimeError) {
-            print(ANSI_RED)
+            if (promptMode) {
+                print(ANSI_RED)
+            }
             System.err.println(
                 error.message + "\n[line " + error.token.line + "]"
             )
-            print(ANSI_RESET)
+            if (promptMode) {
+                print(ANSI_RESET)
+            }
             hadRuntimeError = true
         }
 
