@@ -4,10 +4,8 @@ A Kotlin implementation of [the Lox language](https://github.com/munificent/craf
 Goals:
 - [x] Lox parser
 - [x] Lox interpreter
-- [ ] Add support for arrays
+- [x] Add support for arrays
 - [ ] Add support for static typing
-- [ ] Implement a Virtual Machine
-- [ ] Implement byte code generation
 
 (We will try to stay as close as the original implementation from the book as possible.)
 
